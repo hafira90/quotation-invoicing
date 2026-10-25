@@ -1,0 +1,22 @@
+# robots.txt for Quotation & Invoicing Management System
+# This file controls search engine crawling of the application.
+
+User-agent: *
+Allow: /quotations
+Allow: /invoices
+Allow: /customers
+Allow: /products
+Allow: /payments
+Allow: /reports
+Allow: /document-designer
+Allow: /settings
+Allow: /audit-logs
+
+# Disallow admin/auth routes that should not be indexed
+Disallow: /login
+Disallow: /signup
+Disallow: /api/
+Disallow: /((auth|settings|payments|reports|document-designer|audit-logs)/.*)
+
+# Sitemap location
+Sitemap: https://your-domain.com/sitemap.xml
