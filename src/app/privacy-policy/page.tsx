@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy - Quotation & Invoicing",
+  description: "Privacy policy for the Quotation & Invoicing Management System",
+};
+
 export default function PrivacyPolicy() {
   return (
     <div className="max-w-2xl mx-auto p-6 space-y-8">
@@ -14,7 +21,7 @@ export default function PrivacyPolicy() {
           Overview
         </h2>
         <p>
-          Quotation & Invoicing Management System ("we", "us", "our") operates the
+          Quotation & Invoicing Management System (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the
           Quotation & Invoicing Management System service. This page informs you of
           our policies regarding the collection, use, and disclosure of personal
           data when you use our service.
@@ -71,7 +78,7 @@ export default function PrivacyPolicy() {
         </p>
 
         <h2 className="text-2xl font-medium text-slate-800 mt-8 mb-4">
-          Children's Privacy
+          Children&apos;s Privacy
         </h2>
         <p>
           Our Service does not address anyone under the age of 18. We do not

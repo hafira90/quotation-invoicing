@@ -1,4 +1,3 @@
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 /**
@@ -11,7 +10,7 @@ import { NextResponse } from "next/server";
  * 4. X-Frame-Options - Prevents clickjacking
  * 5. X-Content-Type-Options - Prevents MIME-type sniffing
  */
-export function middleware(request: NextRequest) {
+export function proxy() {
   const response = NextResponse.next();
 
   // Content Security Policy

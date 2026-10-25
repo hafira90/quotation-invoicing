@@ -21,11 +21,12 @@ The `.env.example` file in your project root should contain all required environ
 
 ```bash
 npm run typecheck
-# or
-npx tsc --noEmit
+npm run build
 ```
 
-Fix any errors before deploying.
+Set the required build/runtime environment variables (`DATABASE_URL` and
+`BETTER_AUTH_SECRET`) before running the production build. Fix any errors
+before deploying.
 
 ### 1.3 Run Tests
 
@@ -151,7 +152,6 @@ After the initial deploy, add all environment variables:
    - `EMAIL_SENDER_NAME`
    - `EMAIL_SENDER_ADDRESS`
    - `EMAIL_REPLY_TO` (optional)
-   - `SETUP_TOKEN` - leave empty after first admin is created
 
 ### 5.4 Deploy
 
@@ -159,29 +159,30 @@ Click "Deploy" and wait for the build to complete. Vercel will show the deployme
 
 ## 🔧 Step 6: Post-Deployment Setup
 
-### 6.1 Create the First Super Administrator
+### 6.1 Run Database Migrations
 
-After the first deploy, run the bootstrap script:
-
-```bash
-# Via Vercel CLI or Dashboard
-vercel run "npm run bootstrap:admin"
-```
-
-Or access the bootstrap endpoint directly:
-```
-https://your-app.vercel.app/(auth)/bootstrap
-```
-
-Follow the on-screen instructions to create the first administrator account.
-
-### 6.2 Run Database Migrations
+Run migrations from a trusted machine with the production database configured in
+`.env.local` or the process environment. `DATABASE_URL_DIRECT` is recommended.
 
 ```bash
-npx drizzle-kit migrate
-# or via Vercel
-vercel exec "npm run db:migrate"
+npm run db:migrate
 ```
+
+### 6.2 Create the First Super Administrator
+
+From the project directory, point `DATABASE_URL` at the database where the
+account should be created. Do not paste database credentials or the generated
+password into chat or commit them to the repository.
+
+```bash
+# Use your actual email address. The command creates the account if it is missing.
+ADMIN_EMAIL=owner@example.com ADMIN_NAME="Company Owner" npm run bootstrap:admin
+```
+
+If `ADMIN_PASSWORD` is not supplied, the script generates a strong random
+password and prints it to the terminal once. Store it securely before closing
+the terminal. The script is idempotent: it does not overwrite an existing
+user's password or role assignment. There is no public bootstrap endpoint.
 
 ### 6.3 Seed Demonstration Data (optional)
 

@@ -19,12 +19,25 @@ export function ProductRowActions({ id }: { id: string }) {
   const router = useRouter();
 
   async function setStatus(status: "active" | "archived") {
-    const res = await setProductStatusAction(id, status);
-    if (res.ok) {
-      toast.success(status === "archived" ? "Item archived" : "Item restored");
-      router.refresh();
-    } else {
-      toast.error(res.error ?? "Could not update item");
+    const toastId = toast.loading(
+      status === "archived" ? "Archiving item..." : "Restoring item..."
+    );
+
+    try {
+      const res = await setProductStatusAction(id, status);
+      if (res.ok) {
+        toast.success(status === "archived" ? "Item archived" : "Item restored", {
+          id: toastId,
+        });
+        router.refresh();
+      } else {
+        toast.error(res.error ?? "Could not update item", { id: toastId });
+      }
+    } catch (error) {
+      console.error("[products/status] failed", {
+        message: error instanceof Error ? error.message : String(error),
+      });
+      toast.error("Could not update item", { id: toastId });
     }
   }
 

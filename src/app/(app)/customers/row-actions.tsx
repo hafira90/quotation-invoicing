@@ -19,12 +19,25 @@ export function CustomerRowActions({ id }: { id: string }) {
   const router = useRouter();
 
   async function setStatus(status: "active" | "archived") {
-    const res = await setCustomerStatusAction(id, status);
-    if (res.ok) {
-      toast.success(status === "archived" ? "Customer archived" : "Customer restored");
-      router.refresh();
-    } else {
-      toast.error(res.error ?? "Could not update customer");
+    const toastId = toast.loading(
+      status === "archived" ? "Archiving customer..." : "Restoring customer..."
+    );
+
+    try {
+      const res = await setCustomerStatusAction(id, status);
+      if (res.ok) {
+        toast.success(status === "archived" ? "Customer archived" : "Customer restored", {
+          id: toastId,
+        });
+        router.refresh();
+      } else {
+        toast.error(res.error ?? "Could not update customer", { id: toastId });
+      }
+    } catch (error) {
+      console.error("[customers/status] failed", {
+        message: error instanceof Error ? error.message : String(error),
+      });
+      toast.error("Could not update customer", { id: toastId });
     }
   }
 

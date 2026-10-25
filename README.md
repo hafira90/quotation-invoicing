@@ -75,7 +75,6 @@ Required environment variables:
 | `EMAIL_SENDER_NAME` | Sender name shown on outgoing emails |
 | `EMAIL_SENDER_ADDRESS` | Verified sender address in Resend |
 | `EMAIL_REPLY_TO` | Optional reply-to address |
-| `SETUP_TOKEN` | One-time token for super admin bootstrap (leave empty after first admin) |
 
 ### 3. Database Setup
 
@@ -101,10 +100,15 @@ The app will be available at `http://localhost:3000`.
 ### 5. Create First Super Administrator
 
 ```bash
+# Ensure DATABASE_URL points to the database where the account should be created.
 npm run bootstrap:admin
 ```
 
-This will create the first administrator account. Follow the on-screen instructions.
+This creates the company defaults, roles, permissions, and the first Super Admin
+if they do not already exist. Set `ADMIN_EMAIL` and optionally `ADMIN_NAME` to
+choose the account details. If `ADMIN_PASSWORD` is omitted, the script generates
+a strong password and prints it once; save it in a password manager. The script
+does not reset passwords for existing users.
 
 ### 6. Seed Demonstration Data (optional)
 

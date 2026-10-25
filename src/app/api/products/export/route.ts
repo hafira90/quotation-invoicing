@@ -1,3 +1,4 @@
+import { unstable_rethrow } from "next/navigation";
 import { NextResponse } from "next/server";
 
 import { writeAudit } from "@/lib/audit";
@@ -82,6 +83,7 @@ export async function GET(): Promise<Response> {
       },
     });
   } catch (err) {
+    unstable_rethrow(err);
     console.error("[products/export] failed", {
       message: err instanceof Error ? err.message : String(err),
     });

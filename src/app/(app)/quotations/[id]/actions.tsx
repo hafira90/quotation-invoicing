@@ -98,12 +98,12 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
           </Button>
         ) : null}
         {flags.canIssue ? (
-          <Button size="sm" variant="secondary" disabled={busy} onClick={() => run("issue")}>
+          <Button size="sm" variant="secondary" loading={busy} disabled={busy} onClick={() => run("issue")}>
             Issue
           </Button>
         ) : null}
         {flags.canSend ? (
-          <Button size="sm" variant="secondary" disabled={busy} onClick={() => run("send")}>
+          <Button size="sm" variant="secondary" loading={busy} disabled={busy} onClick={() => run("send")}>
             Mark as sent
           </Button>
         ) : null}
@@ -120,6 +120,7 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
         {flags.canConvert ? (
           <Button
             size="sm"
+            loading={busy}
             disabled={busy}
             onClick={() => {
               if (
@@ -134,7 +135,7 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
           </Button>
         ) : null}
         {flags.canDuplicate ? (
-          <Button size="sm" variant="outline" disabled={busy} onClick={duplicate}>
+          <Button size="sm" variant="outline" loading={busy} disabled={busy} onClick={duplicate}>
             Duplicate
           </Button>
         ) : null}
@@ -142,6 +143,7 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
           <Button
             size="sm"
             variant="ghost"
+            loading={busy}
             disabled={busy}
             onClick={() => {
               if (window.confirm("Cancel this quotation? It stays on record.")) run("cancel");
@@ -178,7 +180,7 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
             />
           </div>
           <div className="flex gap-2">
-            <Button type="submit" size="sm" disabled={busy}>
+            <Button type="submit" size="sm" loading={busy} disabled={busy}>
               Confirm acceptance
             </Button>
             <Button type="button" size="sm" variant="outline" onClick={() => setMode(null)}>
@@ -206,7 +208,7 @@ export function QuotationActions({ id, flags }: { id: string; flags: Flags }) {
             />
           </div>
           <div className="flex gap-2">
-            <Button type="submit" size="sm" variant="destructive" disabled={busy}>
+            <Button type="submit" size="sm" variant="destructive" loading={busy} disabled={busy}>
               Record rejection
             </Button>
             <Button type="button" size="sm" variant="outline" onClick={() => setMode(null)}>
